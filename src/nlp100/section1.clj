@@ -4,12 +4,7 @@
 (clojure.string/reverse "stressed")
 
 ;; 01
-(apply str
-       (map
-        second
-        (filter
-         (fn [[k v]] (odd? k))
-         (map-indexed vector "パタトクカシーー"))))
+(apply str (take-nth 2 "パタトクカシーー"))
 
 ;; 02
 (interleave "パトカー" "タクシー")
@@ -32,3 +27,14 @@
    #(vector %2 (+ %1 1))
    (re-seq #"[a-zA-Z]+"
            "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."))))
+
+;; 05
+(defn n-gram [n seq & [mode]]
+  (map
+   #(apply str %)
+   (if (= mode :word)
+     (partition n 1 (clojure.string/split seq #"\W+"))
+     (partition n 1 seq))))
+
+(n-gram 2 "I am an NLPer")
+(n-gram 2 "I am an NLPer" :word)
