@@ -67,3 +67,17 @@
 (def encoded (cipher text))
 (def decoded (cipher encoded))
 (= text decoded)
+
+;; 09
+(defn typoglycemia [text]
+  (let [words (.split text " ")
+        middle-shuffle (fn [word]
+                         (if (< 4 (count word))
+                           (let [[h x] (split-at 1 word)
+                                 [m l] (split-at (- (count word) 1) x)]
+                             (apply str (map #(apply str %) [h (shuffle m) l])))
+                           word))
+        shuffled (map middle-shuffle words)]
+    (clojure.string/join " " shuffled)))
+
+(typoglycemia "I couldn't believe that I could actually understand what I was reading : the phenomenal power of the human mind .")
