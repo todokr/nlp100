@@ -38,3 +38,32 @@
 
 (n-gram 2 "I am an NLPer")
 (n-gram 2 "I am an NLPer" :word)
+
+;; 06
+(def set-x (set (n-gram 2 "paraparaparadise")))
+(def set-y (set (n-gram 2 "paragraph")))
+
+(clojure.set/union set-x set-y) ;; 和
+(clojure.set/intersection set-x set-y) ;; 積
+(clojure.set/difference set-x set-y);; 差
+
+(contains? set-x "se") ;; true
+(contains? set-y "se") ;; false
+
+;; 07
+(defn template [x y z]
+  (str x "時の" y "は" z))
+
+(template 12 "気温"　22.4)
+
+;; 08
+(defn cipher [text]
+  (apply str
+         (map
+          #(if (Character/isLowerCase %) (char (- 219 (int %))) %)
+          text)))
+
+(def text "I couldn't believe that I could actually understand what I was reading : the phenomenal power of the human mind .")
+(def encoded (cipher text))
+(def decoded (cipher encoded))
+(= text decoded)
