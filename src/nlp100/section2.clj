@@ -52,3 +52,12 @@
 (merge-columns "col1.txt" "col2.txt")
 ;; paste col1.txt col2.txt > merged-sh.txt
 ;; diff -s merged.txt merged-sh.txt
+
+(defn head-lines [n file-name]
+  (with-open [f (io/reader file-name)]
+    (->> (line-seq f)
+         (take n)
+         (string/join "\n")
+         (prn))))
+
+(head-lines 4 "col1.txt")
