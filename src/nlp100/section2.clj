@@ -52,6 +52,7 @@
 ;; paste col1.txt col2.txt > merged-sh.txt
 ;; diff -s merged.txt merged-sh.txt
 
+;; 14
 (defn head-lines [n file-name]
   (with-open [f (io/reader file-name)]
     (->> (line-seq f)
@@ -61,7 +62,7 @@
 
 (head-lines 4 "col1.txt")
 
-;; 14
+;; 15
 (defn tail-lines [n file-name]
   (with-open [f (io/reader file-name)]
     (->> (line-seq f)
@@ -72,3 +73,27 @@
          (prn))))
 
 (tail-lines 5 "col1.txt")
+
+;; 16
+(defn split-file [n file-name]
+  (with-open [f (io/reader file-name)]
+    (let [lines (doall (line-seq f))
+          line-count (count lines)
+          chunk-size (Math/ceil (/ line-count n))
+          chunks (partition-all chunk-size lines)]
+      (doseq [[idx chunk] (map-indexed vector chunks)]
+        (spit (str "chunk" idx ".txt") (string/join "\n" chunk))))))
+
+(split-file 5 "col1.txt")
+
+(partition-all 2 [1 2 3 4 5 6 7])
+
+;; 17
+(defn uniq-col [n file-name]
+  (with-open [f (io/reader file-name)]
+    (let [lines (doall (line-seq f))
+          splitted (map #(string/split % #"\t") lines)
+          cols (map #(nth % n) splitted)]
+      (set cols))))
+
+(uniq-col 0 "./resources/hightemp.txt")
