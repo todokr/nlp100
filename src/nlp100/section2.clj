@@ -38,7 +38,6 @@
 ;; diff -s col2.txt col2-sh.txt
 
 ;; 13
-
 (defn merge-columns [file-name1 file-name2]
   (with-open [f1 (io/reader file-name1)
               f2 (io/reader file-name2)
@@ -61,3 +60,15 @@
          (prn))))
 
 (head-lines 4 "col1.txt")
+
+;; 14
+(defn tail-lines [n file-name]
+  (with-open [f (io/reader file-name)]
+    (->> (line-seq f)
+         (reverse)
+         (take n)
+         (reverse)
+         (string/join "\n")
+         (prn))))
+
+(tail-lines 5 "col1.txt")
