@@ -107,3 +107,14 @@
          (reverse))))
 
 (sort-lines-by 2 "./resources/hightemp.txt")
+
+;; 19
+(defn freq-of [n file-name]
+  (with-open [f (io/reader file-name)]
+    (->> (line-seq f)
+         (map #(nth (string/split % #"\t") n))
+         (frequencies)
+         (sort-by second)
+         (reverse))))
+
+(freq-of 0 "./resources/hightemp.txt")
