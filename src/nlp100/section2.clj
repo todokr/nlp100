@@ -97,3 +97,13 @@
       (set cols))))
 
 (uniq-col 0 "./resources/hightemp.txt")
+
+;; 18
+(defn sort-lines-by [n file-name]
+  (with-open [f (io/reader file-name)]
+    (->> (line-seq f)
+         (map #(string/split % #"\t"))
+         (sort-by #(nth % n))
+         (reverse))))
+
+(sort-lines-by 2 "./resources/hightemp.txt")
