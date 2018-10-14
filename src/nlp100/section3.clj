@@ -29,3 +29,11 @@
        (string/join "\n")))
 
 (extract-category-name (extract-uk "./resources/jawiki-country.json.gz"))
+
+;; 23
+(defn extract-section [text]
+  (->> (re-seq #"(?m)^(=+)\s*(.+?)\s*=+$" text)
+       (map (fn [[_ eq txt]] (vector txt (count eq))))
+       (into {})))
+
+(extract-section (extract-uk "./resources/jawiki-country.json.gz"))
