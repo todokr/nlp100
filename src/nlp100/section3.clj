@@ -37,3 +37,11 @@
        (into {})))
 
 (extract-section (extract-uk "./resources/jawiki-country.json.gz"))
+
+;;24
+(defn extract-file [text]
+  (->> (re-seq #"(?<=File|ファイル):(.+?)\|" text)
+       (map second)
+       (string/join "\n")))
+
+(extract-file (extract-uk "./resources/jawiki-country.json.gz"))
