@@ -21,3 +21,11 @@
   (string/join "\n" (re-seq #"(?m)^\[\[Category:.*?\]\]$" text)))
 
 (extract-category (extract-uk "./resources/jawiki-country.json.gz"))
+
+; 22
+(defn extract-category-name [text]
+  (->> (re-seq #"(?m)^\[\[Category:(.*?)(\|.*?)?\]\]$" text)
+       (map second)
+       (string/join "\n")))
+
+(extract-category-name (extract-uk "./resources/jawiki-country.json.gz"))
